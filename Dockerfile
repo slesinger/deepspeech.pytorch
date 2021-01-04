@@ -1,5 +1,8 @@
 FROM pytorch/pytorch:1.5.1-cuda10.1-cudnn7-devel
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+EXPOSE 8888
+EXPOSE 10456
+
 
 WORKDIR /workspace/
 
@@ -27,5 +30,6 @@ RUN cd deepspeech.pytorch; pip install -r requirements.txt && pip install -e .
 
 # launch jupyter
 WORKDIR /workspace/deepspeech.pytorch
-RUN mkdir data; mkdir notebooks;
-CMD jupyter-notebook --ip="*" --no-browser --allow-root
+#RUN mkdir data; mkdir notebooks;
+#CMD jupyter-notebook --ip="*" --no-browser --allow-root
+CMD /workspace/deepspeech.pytorch/server.sh

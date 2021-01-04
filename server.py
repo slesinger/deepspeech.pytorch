@@ -5,6 +5,7 @@ from tempfile import NamedTemporaryFile
 import hydra
 import torch
 from flask import Flask, request, jsonify
+import json
 from hydra.core.config_store import ConfigStore
 
 from deepspeech_pytorch.configs.inference_config import ServerConfig
@@ -42,11 +43,11 @@ def transcribe_file():
                                               model=model,
                                               decoder=decoder,
                                               device=device,
-                                              use_half=args.half)
+                                              use_half=config.model.use_half)
             logging.info('File transcribed')
             res['status'] = "OK"
-            res['transcription'] = transcription
-            return jsonify(res)
+            res['transcription'] = transcription[0][0]
+            return json.dumps(res, ensure_ascii=False).encode('utf8')
 
 
 @hydra.main(config_name="config")
