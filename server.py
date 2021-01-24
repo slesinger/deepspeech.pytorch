@@ -19,6 +19,10 @@ ALLOWED_EXTENSIONS = set(['.wav', '.mp3', '.ogg', '.webm'])
 cs = ConfigStore.instance()
 cs.store(name="config", node=ServerConfig)
 
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S')
+
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe_file():
